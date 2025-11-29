@@ -4,7 +4,12 @@ Repositorio de practicas del itinerario .NET de EscuelaIT
 
 ## Estado
 
-Clase 2
+Clase 2: BBDD
+
+## Recomendaciones
+
+[Notas de clase](classnotes.md)
+
 
 ## Autor
 
