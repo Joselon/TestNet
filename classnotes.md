@@ -15,7 +15,7 @@
 1. Construir `dotnet build`
 1. Sacar release `dotnet build -c Release` en .\bin\Release
 
-## Iniciar BBDD
+## BBDD
 
 - SQLServer Dev
 
@@ -26,6 +26,15 @@
 1. Iniciar bbdd sin VS2022: `sqllocaldb start MSSQLLocalDB` y `sqlcmd -S "np:\\.\pipe\LOCALDB#1234\tsql\query" -Q "SELECT * FROM sys.databases;" -o 'dBases.txt'`
 1. Ver cheatsheet comandos sqlcmd
 1. En proyecto: `dotnet add package Microsoft.Data.SqlClient`
+
+- Entity Framework
+
+1. `dotnet add package Microsoft.EntityFrameworkCore --version x.0.0` - Con x la version de csproj`<TargetFramework>net9.0</TargetFramework>` (No .Core) Antiguo .- Hay que instalar el proveedor de EntityFramework para el tipo de bbdd que se vaya a usar (mssql,postgresql,etc)
+1. Las clases que tratan conexiones sql deben implementar IDisposable para gestionar la conexión temporal. using en las variables que guardan SqlConnection implica que llama con.Dispose para eliminar recursos externos.
+`dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 9.0.0`
+1. Entidas son clases POCO (Como las POJO) puras sin dependencias que usaremos para el modelo de negocio
+1. `public class BlogContext : DbContext` Se debe heredar de DbContext que si depende ya de EntityFramework. Lo usamos con el patrón builder para el constructor.
+1. Usamos por ejemplo una base de datos creada en un contenedor docker con docker-compose up.
 
 ## Iniciar git
 
