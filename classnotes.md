@@ -43,6 +43,9 @@
  1. Añadimos al blog que el constructor inicialice la lista de post con un tipo que implemente la interfaz IColletion como es el caso de List.
  1. Ya podemos usar el Seeder.cs
  1. Cuando guardamos una consulta en una variable tenemos que indicar si vamos a querer acceder a sus dependecias con include: `var blogs = ctx.Blogs.Include(b => b.Posts).Where(b => b.Posts.Any(p => p.Id > 5))` en este caso necesario para el Console.Writeline siguiente. No le hace falta para el where.
+ 1. Se pueden usar LINQ para las consultas y/o usar blog.AsEnumerable(). por ejemplo para usar LINQ en memoria. ¡Cuidado con lo que traemos a memoria!
+ 1. Se puede usar IEnumerable encubriendo .AsEnumerable 
+ 1. Para no petar la memoria usar IQueryable
 
 ## Iniciar git
 
