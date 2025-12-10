@@ -35,6 +35,14 @@
 1. Entidas son clases POCO (Como las POJO) puras sin dependencias que usaremos para el modelo de negocio
 1. `public class BlogContext : DbContext` Se debe heredar de DbContext que si depende ya de EntityFramework. Lo usamos con el patrón builder para el constructor.
 1. Usamos por ejemplo una base de datos creada en un contenedor docker con docker-compose up.
+1. Revisar postgresql esta levantado:
+`docker logs <nombre-del-contenedor-adminer>` y 
+`docker exec -it testnet-pgsql-1 psql -U demo -d demo`
+ (Instalar wsl --install y docker desktop con sus reinicios)
+ y `docker compose down -v` para borrar el volumen de data
+ 1. Añadimos al blog que el constructor inicialice la lista de post con un tipo que implemente la interfaz IColletion como es el caso de List.
+ 1. Ya podemos usar el Seeder.cs
+ 1. Cuando guardamos una consulta en una variable tenemos que indicar si vamos a querer acceder a sus dependecias con include: `var blogs = ctx.Blogs.Include(b => b.Posts).Where(b => b.Posts.Any(p => p.Id > 5))` en este caso necesario para el Console.Writeline siguiente. No le hace falta para el where.
 
 ## Iniciar git
 
