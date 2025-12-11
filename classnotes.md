@@ -8,6 +8,16 @@
 1. Instalar fuente: `oh-my-posh font install`
 1. Abrir shell : `oh-my-posh get shell` (Consultar web)
 
+## Iniciar git
+
+1. Instalar `winget install "Git.Git" --source winget`
+1. Iniciar `git init`
+1. Configurar `git config --global user.name "nombreusuario"`
+1. Configurar `git config --global user.email "user@mail"`
+1. Configurar repo creado en github `git remote add REPONAME REPOURL`
+1. Configurar flujo por defecto `git push --set-upstream TestNet master`
+1. Añadir codigo `git add . | git commit -m "Tema:Cambio" | git push`
+
 ## Inicio proyecto
 
 1. Comprobar .net instalado `dotnet --version`
@@ -17,7 +27,7 @@
 
 ## BBDD
 
-- SQLServer Dev
+- SQLServer Dev (Carpeta TestNet)
 
 1. En VisualStudio2022 instalar complemento MSSQLocalDB
 1. En explorador de objetos SQL crear base de datos y tabla. Actualizar para ejectuar cambios en t-sql
@@ -27,7 +37,7 @@
 1. Ver cheatsheet comandos sqlcmd
 1. En proyecto: `dotnet add package Microsoft.Data.SqlClient`
 
-- Entity Framework
+- Entity Framework (Carpeta TestEF)
 
 1. `dotnet add package Microsoft.EntityFrameworkCore --version x.0.0` - Con x la version de csproj`<TargetFramework>net9.0</TargetFramework>` (No .Core) Antiguo .- Hay que instalar el proveedor de EntityFramework para el tipo de bbdd que se vaya a usar (mssql,postgresql,etc)
 1. Las clases que tratan conexiones sql deben implementar IDisposable para gestionar la conexión temporal. using en las variables que guardan SqlConnection implica que llama con.Dispose para eliminar recursos externos.
@@ -47,12 +57,7 @@
  1. Se puede usar IEnumerable encubriendo .AsEnumerable 
  1. Para no petar la memoria usar IQueryable
 
-## Iniciar git
+## ASP.NET MVC 
 
-1. Instalar `winget install "Git.Git" --source winget`
-1. Iniciar `git init`
-1. Configurar `git config --global user.name "nombreusuario"`
-1. Configurar `git config --global user.email "user@mail"`
-1. Configurar repo creado en github `git remote add REPONAME REPOURL`
-1. Configurar flujo por defecto `git push --set-upstream TestNet master`
-1. Añadir codigo `git add . | git commit -m "Tema:Cambio" | git push`
+1. Es muy diferente a webForm. Aplicación web de ASP.NET Core (Modelo-Vista-Controlador)  mvc                                 [C#],F#     Web/MVC
+1. Si usamos otros frameworks adicionales para generar html,js y css (babel, etc) el código iría en otra carpeta junto a mvc y wwwroot debería ponerse en .gitignore porque el resultado final tiene que compilarse.
