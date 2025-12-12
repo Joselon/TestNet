@@ -10,7 +10,6 @@ Clase 2: BBDD
 
 [Notas de clase](classnotes.md)
 
-
 ## Autor
 
 Joselon

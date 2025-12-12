@@ -1,8 +1,22 @@
-﻿@{
+﻿@model IEnumerable<TodoTask>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Pending Tasks</h1>
+    <hr />
+    <ul>
+    @foreach (var task in Model)
+    {
+        <li>
+            <div>
+            <p>@task.Description</p>
+            <p><strong>Done at:</strong> @task.DoneWhen</p>
+            </div>
+            <hr />
+        </li>
+    }
+    </ul>
 </div>

@@ -1,5 +1,6 @@
 # Apuntes de Clase
-## Uso consola powershell personalizado:
+
+## Uso consola powershell personalizado
 
 1. Iniciar perfil: `New-Item -Path $PROFILE -Type File -Force`
 1. Instalar editor: `winget install -e --id Neovim.Neovim`
@@ -45,19 +46,22 @@
 1. Entidas son clases POCO (Como las POJO) puras sin dependencias que usaremos para el modelo de negocio
 1. `public class BlogContext : DbContext` Se debe heredar de DbContext que si depende ya de EntityFramework. Lo usamos con el patrón builder para el constructor.
 1. Usamos por ejemplo una base de datos creada en un contenedor docker con docker-compose up.
-1. Revisar postgresql esta levantado:
-`docker logs <nombre-del-contenedor-adminer>` y 
-`docker exec -it testnet-pgsql-1 psql -U demo -d demo`
- (Instalar wsl --install y docker desktop con sus reinicios)
- y `docker compose down -v` para borrar el volumen de data
- 1. Añadimos al blog que el constructor inicialice la lista de post con un tipo que implemente la interfaz IColletion como es el caso de List.
- 1. Ya podemos usar el Seeder.cs
- 1. Cuando guardamos una consulta en una variable tenemos que indicar si vamos a querer acceder a sus dependecias con include: `var blogs = ctx.Blogs.Include(b => b.Posts).Where(b => b.Posts.Any(p => p.Id > 5))` en este caso necesario para el Console.Writeline siguiente. No le hace falta para el where.
- 1. Se pueden usar LINQ para las consultas y/o usar blog.AsEnumerable(). por ejemplo para usar LINQ en memoria. ¡Cuidado con lo que traemos a memoria!
- 1. Se puede usar IEnumerable encubriendo .AsEnumerable 
- 1. Para no petar la memoria usar IQueryable
+1. Revisar postgresql esta levantado:`docker logs <nombre-del-contenedor-adminer>` y `docker exec -it testnet-pgsql-1 psql -U demo -d demo`  (Instalar wsl --install y docker desktop con sus reinicios si no estaba instalado) y `docker compose down -v` para borrar el volumen de data
+1. Añadimos al blog que el constructor inicialice la lista de post con un tipo que implemente la interfaz IColletion como es el caso de List.
+1. Ya podemos usar el Seeder.cs
+1. Cuando guardamos una consulta en una variable tenemos que indicar si vamos a querer acceder a sus dependecias con include: `var blogs = ctx.Blogs.Include(b => b.Posts).Where(b => b.Posts.Any(p => p.Id > 5))` en este caso necesario para el Console.Writeline siguiente. No le hace falta para el where.
+1. Se pueden usar LINQ para las consultas y/o usar blog.AsEnumerable(). por ejemplo para usar LINQ en memoria. ¡Cuidado con lo que traemos a memoria!
+1. Se puede usar IEnumerable encubriendo .AsEnumerable
+1. Para no petar la memoria usar IQueryable
 
-## ASP.NET MVC 
+## ASP.NET MVC
 
 1. Es muy diferente a webForm. Aplicación web de ASP.NET Core (Modelo-Vista-Controlador)  mvc                                 [C#],F#     Web/MVC
 1. Si usamos otros frameworks adicionales para generar html,js y css (babel, etc) el código iría en otra carpeta junto a mvc y wwwroot debería ponerse en .gitignore porque el resultado final tiene que compilarse.
+1. Los metodos IActionResult de los controllers deben corresponderse con vistas en la carpeta de vistas con el mismo nombre
+1. Añadimos la bd usando EntityFramework, creamos Data para el DbContext y los POCO aunque podríamos tener nuestra propia librería donde tengamos esto ya creado (MIRAR)
+1. Añadimos el controlador de PostgreSQL
+1. Creamos un servicio que hará las peticiones a la base de datos. Para inyectarlo tenemos que *añadirlo a las dependencias del controlador*. Lo adecuado es definir una interfaz para el servicio, y al *registrar los servicios en Program.cs* es cuando decidimos que implementación usamos.
+1. Al usar el servicio desde el controlador no guardar síncronamente los datos cuando es una llamada async GetPendingTodos, puede provocar deadlocks.
+1. En la vista hay que indicar el modelo que usa la vista. Los datos que se pasen estarán ahí en la variable que siempre se llama @Model.
+1. Para gestionar el esquema y generar migraciones de BD instalamos las herramientas de EntityFrameworks. [Instalar](https://docs.microsoft.com/es-es/ef/core/cli/dotnet) se instala de forma global como algunas herramientas npm. (Hay que poner la version 9.0.0 también al instalar) Requiere instalar también : `dotnet add package Microsoft.EntityFrameworkCore.Design --version 9.0.0`. Después ya se puede usar `dotnet ef migrations add Initial`que automaticamente crea la carpeta Migrations. Con `dotnet ef database update` aplica directamente las migraciones en la base de datos. Si mas adelante se cambia el POCO de data tenemos que ejectuar `dotnet ef migrations add TodoImportantAdded`. Crea una tabla para llevar el control de las migraciones aplicadas. Metemos datos en la tabla directamente en localhost:8080 para poder verlos (para evitar el seed ahora por tiempo de clase)
