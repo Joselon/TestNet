@@ -5,16 +5,17 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Pending Tasks</h1>
+    <h1 class="display-4">Pending Tasks To Do</h1>
     <hr />
     <ul>
     @foreach (var task in Model)
     {
         <li>
             <div>
-            <p>@task.Description</p>
-            <p><strong>Done at:</strong> @task.DoneWhen</p>
+            <p><strong>@task.Description </strong> - <a href="@Url.Action("MarkAsDone", new { id = task.Id })">Mark as done</a> </p>
+            <p><small>Done at: @task.DoneWhen</small></p>
             </div>
+
             <hr />
         </li>
     }

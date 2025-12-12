@@ -34,6 +34,12 @@ public class HomeController : Controller
     }   
     */
 
+    public async Task<IActionResult> MarkAsDone(int id)
+    {
+        await _todoService.MarkAsDone(id);
+        return RedirectToAction("Index");
+    }
+
     public IActionResult Privacy()
     {
         return View();
