@@ -1,6 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using TestWebBlazorServer.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var connectionString = builder.Configuration["data:conxstring"];
+builder.Services.AddDbContext<TodoContext>(opt => opt.UseNpgsql(connectionString));
+builder.Services.AddTransient<ITodoService, TodoService>();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 

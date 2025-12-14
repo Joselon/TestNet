@@ -15,6 +15,8 @@
     </NotFound>
 </Router>
 -->
+@using TestWebBlazorServer.Data
+@inject ITodoService ITodoSvc
 
 <div style="text-align:center; font-family:sans-serif;">
     <h1>
@@ -31,7 +33,24 @@
     <h3><a target="_blank" href="https://github.com/AdrienTorris/awesome-blazor#awesome-blazor-">Awesome Blazor</a></h3>
     <h3><a target="_blank" href="https://bsky.app/starter-pack/engstromjimmy.bsky.social/3laeduvq7b22u">Bluesky Starter Pack - Blazor </a></h3>
 </div>
+<hr />
+@if (todos is not null)
+{
+    <ul>
+    @foreach (var task in todos)
+        {
+            <li>ID: @task.Id - @task.Description (Important: @task.IsImportant)</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Loading Tasks...</p>
+}
 
+<button @onclick="OnNewTask">New Task</button>
+
+<hr />
 <DemoComponent Value="_value" OnValueChanged="OnValueChangedHandler"/>
 <br />
 <button class="btn btn-primary" @onclick="OnButtonClicked">Increment value</button>
@@ -39,7 +58,25 @@
 @code {
     string Title = "Blazor";
     private int _value = 0;
+    private List<TodoTask> todos;
 
+    protected override async Task OnInitializedAsync()
+    {
+        todos = (await ITodoSvc.GetPendingTodos()).ToList();
+
+    }
+
+    protected void OnNewTask(MouseEventArgs args)
+    {
+        var todoTask = new TodoTask()
+            {
+                Description = $"New Task...",
+                IsImportant = true,
+                DoneWhen = null
+            };
+        todos.Add(todoTask);
+        ITodoSvc.AddNewTask(todoTask);
+    }
     private void OnButtonClicked(MouseEventArgs args)
     {
         _value++;

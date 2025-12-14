@@ -82,6 +82,8 @@
 1. Blazor tiene un comportamiento parecido a React, siguiendo la logica de componentes jerarquicos que pasan el estado a otros componentes hijos y oyen eventos que publican los hijos para cambiar su estado.
 1. Importar en el fichero _Imports.razor la carpeta que creemos para los componentes. Así podemos usar en App.razor o nuestro componente principal sin la ruta completa.
 1. Cuando tenemos un parametro declarado en el componente, al usarlo desde otro lo que espera es una expresión en C# `<DemoComponent Value="expresionC#" />`. El padre le pasa al hijo parametros.
-1. Los cambios en el hijo no se pasan al padre si no usamos evento con event callback en el hijo y un handler en el padre, esto provocará un refresco del padre, que visualmente se refrescaba sin el event callback y handler porque cambia el  hijo y se renderiza pero no actualizaba la variable en el padre.
+1. Los cambios en el hijo no se pasan al padre si no usamos evento con event callback en el hijo y un handler en el padre, esto provocará un refresco del padre, que visualmente se refrescaba sin el event callback y handler porque cambia el  hijo y se renderiza pero no actualizaba la variable en el padre. No se propagan eventos en el arbol de componentes. Hay que explicitarlo.
 1. El servidor web que usa es Kestrel de Microsoft.AspNetCore.Server, carga blazor.server.js en cliente, mantiene abierta conexión con websockets al servidor, hace la comparación del Dom Virtual en servidor y manda cambios para Dom real.
 1. En la version 2022 habia una página de ejemplo fetch que accede a un servicio, pero podíamos usar EntityFramework para usar nuestra bd.
+1. El csproj para instalar paquetes se accede desde el explorador de soluciones, haciendo click en el nombre de la carpeta principal.
+1. _(MIRAR)_ El elemento añadido pone id 0
