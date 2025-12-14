@@ -1,0 +1,19 @@
+﻿<h3>DemoComponent</h3>
+
+<p> Componente Blazor Demo</p>
+<p> Valor actual: @Value </p>
+<button class="btn" @onclick="OnButtonClicked">Reset</button>
+
+@code {
+    [Parameter]
+    public int Value { get; set;  }
+
+    private async Task OnButtonClicked(MouseEventArgs args)
+    {
+        Value = 0;
+        await OnValueChanged.InvokeAsync(Value);
+    }
+
+    [Parameter]
+    public EventCallback<int> OnValueChanged { get; set; }
+}

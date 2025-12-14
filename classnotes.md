@@ -61,7 +61,7 @@
 1. Los metodos IActionResult de los controllers deben corresponderse con vistas en la carpeta de vistas con el mismo nombre
 1. Añadimos la bd usando EntityFramework, creamos Data para el DbContext y los POCO aunque podríamos tener nuestra propia librería donde tengamos esto ya creado _(MIRAR)_
 1. Añadimos el controlador de PostgreSQL
-1. Creamos un servicio que hará las peticiones a la base de datos. Para inyectarlo tenemos que *añadirlo a las dependencias del controlador*. Lo adecuado es definir una interfaz para el servicio, y al *registrar los servicios en Program.cs* es cuando decidimos que implementación usamos.
+1. Creamos un servicio que hará las peticiones a la base de datos. Para inyectarlo tenemos que _añadirlo a las dependencias del controlador_ . Lo adecuado es definir una interfaz para el servicio, y al _registrar los servicios en Program.cs_ es cuando decidimos que implementación usamos.
 1. Al usar el servicio desde el controlador no guardar síncronamente los datos cuando es una llamada async GetPendingTodos, puede provocar deadlocks.
 1. En la vista hay que indicar el modelo que usa la vista. Los datos que se pasen estarán ahí en la variable que siempre se llama @Model. (Mirar los ViewModels)
 1. Para gestionar el esquema y generar migraciones de BD instalamos las herramientas de EntityFrameworks. [Instalar](https://docs.microsoft.com/es-es/ef/core/cli/dotnet) se instala de forma global como algunas herramientas npm. (Hay que poner la version 9.0.0 también al instalar) Requiere instalar también : `dotnet add package Microsoft.EntityFrameworkCore.Design --version 9.0.0`. Después ya se puede usar `dotnet ef migrations add Initial`que automaticamente crea la carpeta Migrations. Con `dotnet ef database update` aplica directamente las migraciones en la base de datos. Si mas adelante se cambia el POCO de data tenemos que ejectuar `dotnet ef migrations add TodoImportantAdded`. Crea una tabla para llevar el control de las migraciones aplicadas. Metemos datos en la tabla directamente en localhost:8080 para poder verlos (para evitar el seed ahora por tiempo de clase, también se podría hacer con migrations).
@@ -70,3 +70,18 @@
 1. `dotnet ef migrations script` para el pipeline de despliegue
 1. Hot reload con `dotnet watch`
 1. Hacer vista de todas las tareas completadas como ejercicio.
+
+## Blazor Web Server
+
+1. Blazor permite ejecutar C# en lado de cliente "sustituyendo" JS hasta que tengamos que interactuar con componentes JS.
+1. Hay algunos que tienen wrappers para envolver las llamadas js.
+1. `dotnet new search blazorserver` e instalar por nombre de paquete: `dotnet new install Toolbelt.AspNetCore.Blazor.Minimum.Templates`
+1. Si no tenemos la ultima version de netx.0 indicamos al crear: `dotnet new blazorservermin --framework net9.0 --name TestWebBlazorServer`
+1. Para usar microsoft visual studio necesitamos el fichero sln `dotnet new sln --name TestWebBlazorServer`
+1. `dotnet sln .\TestWebBlazorServer.sln add .\TestWebBlazorServer\TestWebBlazorServer.csproj` y ya podemos hacer `start .\TestWebBlazorServer.sln` para abrir el proyecto
+1. Blazor tiene un comportamiento parecido a React, siguiendo la logica de componentes jerarquicos que pasan el estado a otros componentes hijos y oyen eventos que publican los hijos para cambiar su estado.
+1. Importar en el fichero _Imports.razor la carpeta que creemos para los componentes. Así podemos usar en App.razor o nuestro componente principal sin la ruta completa.
+1. Cuando tenemos un parametro declarado en el componente, al usarlo desde otro lo que espera es una expresión en C# `<DemoComponent Value="expresionC#" />`. El padre le pasa al hijo parametros.
+1. Los cambios en el hijo no se pasan al padre si no usamos evento con event callback en el hijo y un handler en el padre, esto provocará un refresco del padre, que visualmente se refrescaba sin el event callback y handler porque cambia el  hijo y se renderiza pero no actualizaba la variable en el padre.
+1. El servidor web que usa es Kestrel de Microsoft.AspNetCore.Server, carga blazor.server.js en cliente, mantiene abierta conexión con websockets al servidor, hace la comparación del Dom Virtual en servidor y manda cambios para Dom real.
+1. En la version 2022 habia una página de ejemplo fetch que accede a un servicio, pero podíamos usar EntityFramework para usar nuestra bd.
