@@ -87,3 +87,16 @@
 1. En la version 2022 habia una página de ejemplo fetch que accede a un servicio, pero podíamos usar EntityFramework para usar nuestra bd.
 1. El csproj para instalar paquetes se accede desde el explorador de soluciones, haciendo click en el nombre de la carpeta principal.
 1. _(MIRAR)_ El elemento añadido pone id 0
+
+## Blazor WASM
+
+1. `dotnet new blazorwasm --name TestBlazorWasm`
+1. `dotnet new sln --name BlazorWasm`
+1. `dotnet sln .\BlazorWasm.sln add .\TestBlazorWasm\TestBlazorWasm.csproj`
+1. `start .\BlazorWasm.sln`
+
+Diferencias:
+
+1. Todo el codigo se ejecuta en cliente, no en el servidor. Todo se ejecuta en WebAssembly. Se genera un fichero wasm y otro con mi codigo.
+1. No tendremos acceso directo a bd
+1. El ejemplo de fetch se hace con un http.getfromjson, asi que necesitamos una API Rest para consumir esos datos.
