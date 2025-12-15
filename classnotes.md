@@ -97,6 +97,8 @@
 
 Diferencias:
 
-1. Todo el codigo se ejecuta en cliente, no en el servidor. Todo se ejecuta en WebAssembly. Se genera un fichero wasm y otro con mi codigo.
+1. Todo el codigo se ejecuta en cliente, no en el servidor. Todo se ejecuta en WebAssembly. Se genera un fichero wasm y otro  fichero con mi codigo.
 1. No tendremos acceso directo a bd
 1. El ejemplo de fetch se hace con un http.getfromjson, asi que necesitamos una API Rest para consumir esos datos.
+1. BalzorWASM es lo que más se parece a una SPA.
+1. Ventaja de webassenbly: no necesitas conexión permanente, puedes almacenar en local en el cliente y cuando recupere conexión mandar los datos, cosa que en el otro modelo que todo se ejecuta en el backend si perdemos conexión tenemos una pantalla de error y no tenemos esta opción.

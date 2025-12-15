@@ -34,14 +34,16 @@ else
             }
         </tbody>
     </table>
+
+    <button @onclick="OnNewForecast">Add New</button>
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    private List<WeatherForecast>? forecasts;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        forecasts = (await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json")).ToList();
     }
 
     public class WeatherForecast
@@ -53,5 +55,19 @@ else
         public string? Summary { get; set; }
 
         public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+
+    private void OnNewForecast()
+    {
+        if (forecasts is not null)
+        {
+            forecasts.Add(new WeatherForecast()
+                {
+                    Date = DateOnly.FromDateTime(DateTime.Now),
+                    TemperatureC = new Random().Next(1, 25),
+                    Summary = "Joseando"
+                });
+                //Faltaría la llamada para guardarlo si la API lo permitiera
+        }
     }
 }

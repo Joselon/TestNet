@@ -15,6 +15,7 @@
     </NotFound>
 </Router>
 -->
+@using TestWebBlazorServer.Components
 @using TestWebBlazorServer.Data
 @inject ITodoService ITodoSvc
 
@@ -58,7 +59,7 @@ else
 @code {
     string Title = "Blazor";
     private int _value = 0;
-    private List<TodoTask> todos;
+    private List<TodoTask>? todos;
 
     protected override async Task OnInitializedAsync()
     {

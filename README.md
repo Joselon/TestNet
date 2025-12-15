@@ -10,6 +10,10 @@ Clase 2: BBDD
 
 [Notas de clase](classnotes.md)
 
-## Autor
+### Profesor
 
-Joselon
+Eduard Tomás @eiximenis
+
+### Alumno
+
+José Navarro @Joselon
