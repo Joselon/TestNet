@@ -102,3 +102,15 @@ Diferencias:
 1. El ejemplo de fetch se hace con un http.getfromjson, asi que necesitamos una API Rest para consumir esos datos.
 1. BalzorWASM es lo que más se parece a una SPA.
 1. Ventaja de webassenbly: no necesitas conexión permanente, puedes almacenar en local en el cliente y cuando recupere conexión mandar los datos, cosa que en el otro modelo que todo se ejecuta en el backend si perdemos conexión tenemos una pantalla de error y no tenemos esta opción.
+
+## API
+
+1. Usamos `dotnet new webapi --name TestAPI`
+1. Antes de .net 5 necesitabamos una entrada de aplicación con main(), con su namespace, etc...
+1. Ahora se parte por convención de un Program.cs sin necesidad de escribir todo lo anterior.
+1. Antes se explicitaba como levantar el host usando kestrel, que se encarga de abrir los puertos por los que escucha nuestra aplicación.
+1. Las peticiones van en un pipeline de middlewares, la respuestas se pueden generar cuando llegue al midleware que sabe como hacerlo, no tiene que recorrer todo.
+1. Antes los middleware se agregaban en startup.cs, en el metodo Configure son los app.UseXXXX. Hay un middleware un tanto especial donde se pone todo, UseEndpoints(endpoints => endopoints.MapControllers()) es el que si no encuentra el controlador devuelve 404. Tenemos el middleware UseDeveloperExceptionPage() que nos muestra los errores y la pila.
+1. Antes los servicios estaba en otro metodo en Startup: ConfigureServices. Es donde añadiriamos el AddTransient dbcontext...
+1. Ahora usamos el builder, toda la parte de levantar el host se resume en una sola linea con el builder.
+1. En la ultima versión ya no se usa Swashbuckle.AspNetCore, si no directamente OpenApi.
